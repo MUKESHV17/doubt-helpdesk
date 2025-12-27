@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import socket from "./socket";
 import Header from "./Header";
+import Notification from "./Notification";
 
 
 function Student() {
@@ -9,18 +10,26 @@ function Student() {
   const [description, setDescription] = useState("");
   const [messages, setMessages] = useState([]);
   const [mentorOnline, setMentorOnline] = useState(false);
-
+  const [notification, setNotification] = useState("");
+ 
 
   const token = localStorage.getItem("token");
 
  useEffect(() => {
   const handleReply = (msg) => {
-    setMessages(prev => [...prev, msg.message]);
-  };
+  setMessages(prev => [...prev, msg.message]);
+  setNotification("Mentor replied to your doubt ✅");
+};
+
 
   socket.on("mentor_reply", handleReply);
 
   return () => {
+    <Notification
+  message={notification}
+  clear={() => setNotification("")}
+/>
+
     socket.off("mentor_reply", handleReply);
   };
 }, []);

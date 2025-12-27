@@ -1,11 +1,15 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import socket from "./socket";
+import Header from "./Header";
+import Notification from "./Notification";
 
 
 function Mentor() {
   const [doubts, setDoubts] = useState([]);
   const [reply, setReply] = useState("");
+  const [notification, setNotification] = useState("");
+
 
   const token = localStorage.getItem("token");
 
@@ -21,8 +25,10 @@ function Mentor() {
     .then(res => setDoubts(res.data));
 
   const handleNewDoubt = (doubt) => {
-    setDoubts(prev => [...prev, doubt]);
-  };
+  setDoubts(prev => [...prev, doubt]);
+  setNotification("New doubt received 📩");
+};
+
 
   socket.on("new_doubt", handleNewDoubt);
 
@@ -47,23 +53,42 @@ function Mentor() {
   };
 
   return (
-    <div>
-      <h2>Mentor Dashboard</h2>
+    
+  <div>
+    <Notification
+  message={notification}
+  clear={() => setNotification("")}
+/>
+
+    <Header title="Mentor Dashboard" />
+
+    <div className="container">
+      {doubts.length === 0 && (
+        <div className="card">
+          <p className="muted">No open doubts 🎉</p>
+        </div>
+      )}
 
       {doubts.map(d => (
-        <div key={d._id}>
-          <h4>{d.title}</h4>
-          <p>{d.description}</p>
-          <input
-            placeholder="Reply"
+        <div className="card" key={d._id}>
+          <h3>{d.title}</h3>
+          <p className="muted">{d.description}</p>
+
+          <textarea
+            placeholder="Type your reply here..."
             value={reply}
             onChange={e => setReply(e.target.value)}
           />
-          <button onClick={() => sendReply(d._id)}>Send</button>
+
+          <button onClick={() => sendReply(d._id)} disabled={!reply}>
+            Send Reply
+          </button>
         </div>
       ))}
     </div>
-  );
+  </div>
+);
+
 }
 
 export default Mentor;
