@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import socket from "./socket";
-import Header from "./Header";
+import Navbar from "./Navbar";
+
 import Notification from "./Notification";
 
 
@@ -11,6 +12,8 @@ function Student() {
   const [messages, setMessages] = useState([]);
   const [mentorOnline, setMentorOnline] = useState(false);
   const [notification, setNotification] = useState("");
+  const [notifications, setNotifications] = useState([]);
+
  
 
   const token = localStorage.getItem("token");
@@ -18,7 +21,11 @@ function Student() {
  useEffect(() => {
   const handleReply = (msg) => {
   setMessages(prev => [...prev, msg.message]);
-  setNotification("Mentor replied to your doubt ✅");
+  setNotifications(prev => [
+  "Mentor replied to your doubt ✅",
+  ...prev
+]);
+
 };
 
 
@@ -64,7 +71,9 @@ useEffect(() => {
 
   return (
   <div>
-    <Header title="Student Dashboard" />
+    <Navbar title="Student Dashboard" notifications={notifications} />
+
+
 
     <div className="container">
       <div className="card">

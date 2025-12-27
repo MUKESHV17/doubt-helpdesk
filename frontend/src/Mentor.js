@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import socket from "./socket";
-import Header from "./Header";
+import Navbar from "./Navbar";
+
 import Notification from "./Notification";
 
 
@@ -9,6 +10,8 @@ function Mentor() {
   const [doubts, setDoubts] = useState([]);
   const [reply, setReply] = useState("");
   const [notification, setNotification] = useState("");
+  const [notifications, setNotifications] = useState([]);
+
 
 
   const token = localStorage.getItem("token");
@@ -26,7 +29,11 @@ function Mentor() {
 
   const handleNewDoubt = (doubt) => {
   setDoubts(prev => [...prev, doubt]);
-  setNotification("New doubt received 📩");
+  setNotifications(prev => [
+  "New doubt received 📩",
+  ...prev
+]);
+
 };
 
 
@@ -60,7 +67,9 @@ function Mentor() {
   clear={() => setNotification("")}
 />
 
-    <Header title="Mentor Dashboard" />
+    <Navbar title="Mentor Dashboard" notifications={notifications} />
+
+
 
     <div className="container">
       {doubts.length === 0 && (

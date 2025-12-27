@@ -10,7 +10,10 @@ body {
   max-width: 900px;
   margin: 40px auto;
   padding: 20px;
+  background-color: #f9fafb; /* light tone */
+  border-radius: 12px;
 }
+
 
 /* Card */
 .card {
@@ -73,4 +76,136 @@ button.secondary:hover {
 .muted {
   color: #6b7280;
   font-size: 14px;
+}
+
+/* Landing Page */
+.landing {
+  height: 100vh;
+  background: linear-gradient(
+      rgba(0, 0, 0, 0.7),
+      rgba(0, 0, 0, 0.7)
+    ),
+    url("https://images.unsplash.com/photo-1522202176988-66273c2fd55f")
+      center/cover no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.overlay {
+  text-align: center;
+  color: white;
+  max-width: 700px;
+}
+
+.overlay h1 {
+  font-size: 48px;
+  margin-bottom: 16px;
+}
+
+.overlay p {
+  font-size: 20px;
+  color: #d1d5db;
+  margin-bottom: 30px;
+}
+
+.landing-buttons button {
+  margin: 0 10px;
+  padding: 12px 24px;
+  font-size: 16px;
+}
+
+/* Navbar */
+.navbar {
+  background-color: #111827; /* dark */
+  color: white;
+  padding: 14px 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  margin: 0;
+  font-size: 20px;
+}
+
+.logout {
+  background-color: #ef4444;
+}
+
+.logout:hover {
+  background-color: #dc2626;
+}
+
+
+/* Smooth transitions */
+button,
+.card {
+  transition: all 0.2s ease-in-out;
+}
+
+button:hover {
+  transform: translateY(-1px);
+}
+
+.card:hover {
+  transform: translateY(-4px);
+}
+
+
+/* Auth Pages (Login & Signup) */
+.auth-page {
+  height: 100vh;
+  background: linear-gradient(
+      rgba(0, 0, 0, 0.75),
+      rgba(0, 0, 0, 0.75)
+    ),
+    url("https://images.unsplash.com/photo-1524985069026-dd778a71c7b4")
+      center/cover no-repeat;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.auth-card {
+  background-color: rgba(0, 0, 0, 0.75);
+  padding: 40px;
+  width: 360px;
+  border-radius: 8px;
+  color: white;
+}
+
+.auth-card h2 {
+  margin-bottom: 20px;
+}
+
+.auth-card input,
+.auth-card select {
+  background-color: #333;
+  color: white;
+  border: none;
+}
+
+.auth-card input::placeholder {
+  color: #b3b3b3;
+}
+
+.auth-card button {
+  width: 100%;
+  margin-top: 12px;
+}
+
+.auth-link {
+  margin-top: 16px;
+  font-size: 14px;
+  color: #b3b3b3;
+}
+
+.auth-link button {
+  background: none;
+  border: none;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
 }

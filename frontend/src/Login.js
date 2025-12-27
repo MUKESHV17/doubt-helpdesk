@@ -3,6 +3,7 @@ import axios from "axios";
 import Student from "./Student";
 import Mentor from "./Mentor";
 import Signup from "./Signup";
+import { useNavigate } from "react-router-dom";
 
 
 function Login() {
@@ -10,6 +11,7 @@ function Login() {
   const [password, setPassword] = useState("");
   const [user, setUser] = useState(null);
   const [showSignup, setShowSignup] = useState(false);
+  const navigate = useNavigate();
 
 
   const login = async () => {
@@ -17,12 +19,13 @@ function Login() {
       "http://localhost:5000/api/auth/login",
       { email, password }
     );
-    setUser(res.data);
+    if (res.data.role === "student") navigate("/student");
+    if (res.data.role === "mentor") navigate("/mentor");
+
     localStorage.setItem("token", res.data.token);
   };
 
-if (user?.role === "student") return <Student />;
-if (user?.role === "mentor") return <Mentor />;
+
 
 if (showSignup) {
   return <Signup goToLogin={() => setShowSignup(false)} />;
@@ -30,22 +33,33 @@ if (showSignup) {
 
 
   return (
-    <div>
-      <h2>Login</h2>
-      <input placeholder="Email" onChange={e => setEmail(e.target.value)} />
-      <br />
+  <div className="auth-page">
+    <div className="auth-card">
+      <h2>Sign In</h2>
+
       <input
-        placeholder="Password"
+        placeholder="Email"
+        onChange={e => setEmail(e.target.value)}
+      />
+
+      <input
         type="password"
+        placeholder="Password"
         onChange={e => setPassword(e.target.value)}
       />
-      <br />
-      <button onClick={login}>Login</button>
-<br />
-<button onClick={() => setShowSignup(true)}>Sign Up</button>
 
+      <button onClick={login}>Sign In</button>
+
+      <div className="auth-link">
+        New to platform?{" "}
+        <button onClick={() => navigate("/signup")}>
+          Sign up now
+        </button>
+      </div>
     </div>
-  );
+  </div>
+);
+
 }
 
 export default Login;
